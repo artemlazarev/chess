@@ -4,6 +4,7 @@ import com.lazarev.edu.game.chess.client.gui.ChessFigureGUI;
 import com.lazarev.edu.game.chess.logic.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -65,11 +66,12 @@ public class MainFrameChess {
         ChessFigureGUI fig;
         ChessFigurePosition pos;
         JLabel label = new JLabel((Icon) null);
-
+        Color color;
 
         private Square(Color color) {
+            this.color = color;
             setPreferredSize(new Dimension(SQUARE_W, SQUARE_H));
-            label.setFont(new Font("Serif", Font.BOLD, SQUARE_W-3));
+            label.setFont(new Font("Serif", Font.BOLD, SQUARE_W-20));
             setBackground(color);
             setLayout(new BorderLayout());
             add(label, BorderLayout.CENTER);
@@ -106,12 +108,15 @@ public class MainFrameChess {
         public void pressed() {
             if (curentChessFigure.getFigureTouched())
             {
+                curentChessFigure.setFigureTouched(false);
+                setBorder(BorderFactory.createLineBorder(color,2));
                 if(fig.checkPossibleMovement(curentPlayedPos, pos))
                     boardLayout.setFigAtPosition(pos, curentChessFigure);
             }
             else {
+                setBorder(BorderFactory.createLineBorder(Color.yellow,2));
                 curentPlayedPos = pos;
-                fig.setFigureTouched(false);
+                fig.setFigureTouched(true);
                 curentChessFigure = fig;
             }
         }

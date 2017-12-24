@@ -12,7 +12,7 @@ public class ChessFigure {
         return figureTouched;
     }
 
-    public void setFigureTouched(Boolean figureTouched) {
+    public void setFigureTouched(boolean figureTouched) {
         this.figureTouched = figureTouched;
     }
     public ChessFigure (ChessFigureColor color, ChessFigureType type, char text){
