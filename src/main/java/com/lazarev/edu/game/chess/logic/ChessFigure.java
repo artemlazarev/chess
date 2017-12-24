@@ -1,6 +1,5 @@
 package com.lazarev.edu.game.chess.logic;
 
-import java.awt.*;
 
 public class ChessFigure {
     private ChessFigureColor color;

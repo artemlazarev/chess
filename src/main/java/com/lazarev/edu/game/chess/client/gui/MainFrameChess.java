@@ -65,13 +65,13 @@ public class MainFrameChess {
         private final static int SQUARE_H = SQUARE_W;
         ChessFigureGUI fig;
         ChessFigurePosition pos;
-        JLabel label = new JLabel((Icon) null);
+        JLabel label = new JLabel();
         Color color;
 
         private Square(Color color) {
             this.color = color;
             setPreferredSize(new Dimension(SQUARE_W, SQUARE_H));
-            label.setFont(new Font("Serif", Font.BOLD, SQUARE_W-20));
+            label.setFont(new Font("Serif", Font.BOLD, SQUARE_W-10));
             setBackground(color);
             setLayout(new BorderLayout());
             add(label, BorderLayout.CENTER);
@@ -94,7 +94,7 @@ public class MainFrameChess {
 
         public void setChessFigureGUI(ChessFigureGUI f){
             fig = f;
-            board[pos.getI()][pos.getJ()].setText(String.valueOf( fig.getText() ));
+            setText(String.valueOf( fig.getText() ));
         }
 
         public void initSquare(){
@@ -106,12 +106,22 @@ public class MainFrameChess {
         }
 
         public void pressed() {
+            if(curentChessFigure==null)
+                curentChessFigure = fig;
             if (curentChessFigure.getFigureTouched())
             {
-                curentChessFigure.setFigureTouched(false);
-                setBorder(BorderFactory.createLineBorder(color,2));
-                if(fig.checkPossibleMovement(curentPlayedPos, pos))
+                if(curentChessFigure.equals(fig))
+                    curentChessFigure.setFigureTouched(false);
+                if(curentChessFigure.checkPossibleMovement(curentPlayedPos, pos)) {
                     boardLayout.setFigAtPosition(pos, curentChessFigure);
+                    boardLayout.setFigAtPosition(curentPlayedPos, new ChessFigure ());
+                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setChessFigureGUI(new ChessFigureGUI(new ChessFigure ()));
+                    setChessFigureGUI(new ChessFigureGUI(curentChessFigure));
+                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setBorder(BorderFactory.createLineBorder(color, 2));
+                    curentChessFigure=null;
+                }
+                else ;
+
             }
             else {
                 setBorder(BorderFactory.createLineBorder(Color.yellow,2));

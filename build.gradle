@@ -1,0 +1,32 @@
+group 'lazarev'
+version '1.0'
+
+apply plugin: 'java'
+//apply plugin: 'war'
+
+compileJava.options.encoding = 'UTF-8'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+//buildscript {
+//    repositories {
+//        maven {
+//            url "https://plugins.gradle.org/m2/"
+//        }
+//    }
+//    dependencies {
+//        classpath "net.ltgt.gradle:gradle-apt-plugin:0.13"
+//    }
+//}
+
+//apply plugin: "net.ltgt.apt"
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
