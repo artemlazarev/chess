@@ -1,7 +1,7 @@
 package com.lazarev.edu.game.chess.logic;
 
 
-public class ChessFigure {
+public abstract class ChessFigure {
     private ChessFigureColor color;
     private ChessFigureType type;
     private char text;
@@ -25,10 +25,7 @@ public class ChessFigure {
         figureTouched = false;
     }
 
-    public boolean checkPossibleMovement(ChessFigurePosition from , ChessFigurePosition to){
-        //TODO add check for valid turn
-        return figureTouched;
-    };
+    abstract public boolean checkPossibleMovement(ChessFigurePosition from , ChessFigurePosition to);
 
     public ChessFigureColor getColor() {
         return color;

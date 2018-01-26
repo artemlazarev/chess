@@ -24,7 +24,6 @@ public class MainFrameChess {
 
     public MainFrameChess(){
         curentPlayedPos = new ChessFigurePosition();
-        curentChessFigure = new ChessFigure();
         frame = new JFrame("Chess");
         messageLabel = new JLabel("no text");
         messageLabel.setBackground(Color.lightGray);
@@ -114,8 +113,8 @@ public class MainFrameChess {
                     curentChessFigure.setFigureTouched(false);
                 if(curentChessFigure.checkPossibleMovement(curentPlayedPos, pos)) {
                     boardLayout.setFigAtPosition(pos, curentChessFigure);
-                    boardLayout.setFigAtPosition(curentPlayedPos, new ChessFigure ());
-                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setChessFigureGUI(new ChessFigureGUI(new ChessFigure ()));
+                    boardLayout.setFigAtPosition(curentPlayedPos, new ChessFigureNo ());
+                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setChessFigureGUI(new ChessFigureGUI(new ChessFigureNo ()));
                     setChessFigureGUI(new ChessFigureGUI(curentChessFigure));
                     board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setBorder(BorderFactory.createLineBorder(color, 2));
                     curentChessFigure=null;

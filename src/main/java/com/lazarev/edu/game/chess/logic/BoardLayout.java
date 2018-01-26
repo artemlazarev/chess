@@ -13,4 +13,12 @@ public class BoardLayout {
     public static BoardLayout getBoardLayout(){
         return new BoardLayout();
     }
+
+    public boolean pathIsFree(ChessFigurePosition from, ChessFigurePosition to) {
+        boolean nextCheck=true;
+        if(from.getJ()==to.getJ())
+            for(int nextCheck){
+                from.
+            }
+    }
 }
