@@ -1,12 +1,13 @@
 package com.lazarev.edu.game.chess.logic;
 
 public enum ChessFigureType {
-    PAWN (InitLayout.board[1][1]),
-    KNIGHT(InitLayout.board[0][2]),
-    BISHOP(InitLayout.board[0][3]),
-    ROOK(InitLayout.board[0][0]),
-    QUEEN(InitLayout.board[0][4]),
-    KING(InitLayout.board[0][5]);
+    PAWN ('♙'),
+    KNIGHT('♘'),
+    BISHOP('♗'),
+    ROOK('♖'),
+    QUEEN('♕'),
+    KING('♔'),
+    FREE(' ');
 
     private final String name;
 

@@ -1,14 +1,11 @@
 package com.lazarev.edu.game.chess.client.gui;
 
-import com.lazarev.edu.game.chess.client.gui.ChessFigureGUI;
 import com.lazarev.edu.game.chess.logic.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 
 public class MainFrameChess {
@@ -32,11 +29,11 @@ public class MainFrameChess {
         JPanel boardPanel = new JPanel();
         boardPanel.setLayout(new GridLayout(f_lengh, f_lengh));
         for (int i = 0; i < InitLayout.F_LENGH; i++) {
-            for (int j = 0; j < InitLayout.F_LENGH; j++) {
+            for (int j = InitLayout.F_LENGH -1; j >=0; j--) {
                 board[i][j] = new Square(i,j);
                 board[i][j].initSquare();
                 board[i][j].addMouseListener(new SquareMouseListener(board[i][j]));
-                boardPanel.add(board[i][j], i,j);
+                boardPanel.add(board[i][j]);
             }
         }
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
@@ -54,7 +51,7 @@ public class MainFrameChess {
     public void initFigureLayout(){
         for (int i = 0; i < InitLayout.F_LENGH; i++) {
             for (int j = 0; j < InitLayout.F_LENGH; j++) {
-                board[i][j].setText(String.valueOf( InitLayout.board[i][j] ));
+                board[i][j].setText(boardLayout.getFigAtPosition(i,j).toString());
             }
         }
     };
@@ -62,7 +59,7 @@ public class MainFrameChess {
     private class Square extends JPanel {
         private final static int SQUARE_W = 50;
         private final static int SQUARE_H = SQUARE_W;
-        ChessFigureGUI fig;
+        ChessFigure fig;
         ChessFigurePosition pos;
         JLabel label = new JLabel();
         Color color;
@@ -91,14 +88,14 @@ public class MainFrameChess {
             label.setText(t);
         }
 
-        public void setChessFigureGUI(ChessFigureGUI f){
+        public void setChessFigure(ChessFigure f){
             fig = f;
-            setText(String.valueOf( fig.getText() ));
+            setText(f.toString() );
         }
 
         public void initSquare(){
-            ChessFigureGUI f = new ChessFigureGUI ( InitLayout.boardChess[pos.getI()][pos.getJ()] );
-            setChessFigureGUI(f);
+            ChessFigure f = InitLayout.boardChess[pos.getI()][pos.getJ()] ;
+            setChessFigure(f);
         }
         public String getInfo() {
             return pos.getPosition() + " "+ fig.toString();
@@ -109,13 +106,15 @@ public class MainFrameChess {
                 curentChessFigure = fig;
             if (curentChessFigure.getFigureTouched())
             {
-                if(curentChessFigure.equals(fig))
+                if(curentChessFigure.equals(fig)) {
                     curentChessFigure.setFigureTouched(false);
-                if(curentChessFigure.checkPossibleMovement(curentPlayedPos, pos)) {
+                    setBorder(BorderFactory.createLineBorder(color, 2));
+                }
+                if(curentChessFigure.checkPossibleMovement(curentPlayedPos, pos, boardLayout)) {
                     boardLayout.setFigAtPosition(pos, curentChessFigure);
                     boardLayout.setFigAtPosition(curentPlayedPos, new ChessFigureNo ());
-                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setChessFigureGUI(new ChessFigureGUI(new ChessFigureNo ()));
-                    setChessFigureGUI(new ChessFigureGUI(curentChessFigure));
+                    board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setChessFigure(new ChessFigureNo());
+                    setChessFigure(curentChessFigure);
                     board[curentPlayedPos.getI()][curentPlayedPos.getJ()].setBorder(BorderFactory.createLineBorder(color, 2));
                     curentChessFigure=null;
                 }

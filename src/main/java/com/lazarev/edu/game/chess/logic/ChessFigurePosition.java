@@ -1,8 +1,8 @@
 package com.lazarev.edu.game.chess.logic;
 
 public class ChessFigurePosition {
-    int i;
-    int j;
+    private int i;
+    private int j;
 
     public ChessFigurePosition(int i, int j) {
         this.i = i;
@@ -11,6 +11,11 @@ public class ChessFigurePosition {
     public ChessFigurePosition(){};
     public String getPosition() {
         return " "+(char )('a'+ j) + (int)(i+1);
+    }
+
+    @Override
+    public String toString() {
+        return getPosition();
     }
 
     public int getI() {
