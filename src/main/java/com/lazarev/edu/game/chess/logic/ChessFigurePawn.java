@@ -24,7 +24,7 @@ public class ChessFigurePawn extends ChessFigure {
                 return true;
             else;
         else
-            if( Math.abs(from.getI()-to.getI()) == 2)
+            if( Math.abs(from.getI()-to.getI()) == 2 && fistTurnFoFig)
                 return  board.getFigAtPosition(from.getI()+forward, from.getJ()).getType() == ChessFigureType.FREE
                         && board.getFigAtPosition(to).getType() == ChessFigureType.FREE;
             else

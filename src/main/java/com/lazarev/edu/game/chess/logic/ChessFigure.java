@@ -16,11 +16,10 @@ public abstract class ChessFigure{
     public void setFigureTouched(boolean figureTouched) {
         this.figureTouched = figureTouched;
     }
-    //public ChessFigure (ChessFigureColor color, ChessFigureType type, char text){
+
     public ChessFigure (ChessFigureColor color, ChessFigureType type){
         this.color = color;
         this.type = type;
-        //this.text = text;
         figureTouched = false;
     }
     public ChessFigure (){
