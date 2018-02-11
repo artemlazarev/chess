@@ -28,7 +28,7 @@ public abstract class ChessFigure{
         figureTouched = false;
     }
     public boolean  castling(){
-        return fistTurnFoFig && (getType()==ChessFigureType.ROOK ||getType()== ChessFigureType.KING);
+        return fistTurnFoFig && (type==ChessFigureType.ROOK ||type == ChessFigureType.KING);
     }
     public boolean checkPossibleMovement(ChessFigurePosition from , ChessFigurePosition to, BoardLayout board)
     {
@@ -46,7 +46,7 @@ public abstract class ChessFigure{
         return false;
     }
 
-    //TODO implement
+    //TODO not full implementation
     public boolean checkPossibleCastling(ChessFigurePosition from , ChessFigurePosition to, BoardLayout board){
         //take the king
         int direction, len;
