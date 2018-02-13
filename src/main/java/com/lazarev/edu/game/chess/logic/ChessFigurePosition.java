@@ -10,7 +10,7 @@ public class ChessFigurePosition {
     }
     public ChessFigurePosition(){};
     public String getPosition() {
-        return " "+(char )('a'+ j) + (int)(i+1);
+        return ""+(char )('a'+ j) + (int)(i+1);
     }
 
     @Override

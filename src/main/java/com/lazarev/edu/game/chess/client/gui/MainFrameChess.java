@@ -1,25 +1,35 @@
 package com.lazarev.edu.game.chess.client.gui;
 
+import com.lazarev.edu.game.chess.client.ChessClientTCP;
+import com.lazarev.edu.game.chess.client.GameMessageConsumer;
+import com.lazarev.edu.game.chess.client.GameMessageProducer;
 import com.lazarev.edu.game.chess.logic.*;
+import com.lazarev.edu.game.chess.server.GameMessage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
+//https://stackoverflow.com/questions/21142686/making-a-robust-resizable-swing-chess-gui
 
-public class MainFrameChess {
+public class MainFrameChess implements GameMessageProducer, GameMessageConsumer {
 
     private JFrame frame;
     private JLabel messageLabel;
-    private BoardLayout boardLayout = BoardLayout.getBoardLayout();
+    private ChessClientTCP clientTCP;
     ChessFigurePosition curentPlayedPos;
     ChessFigure curentChessFigure;
-    int f_lengh = InitLayout.F_LENGH;
-    Square[][] board = new Square[f_lengh][f_lengh];
+    private BoardLayout boardLayout;
+    int fLn;
+    Square[][] board;
 
-
-    public MainFrameChess(){
+    public MainFrameChess(ChessClientTCP clientTCP){
+        this.clientTCP=clientTCP;
+        this.boardLayout= clientTCP.getBoardLayout();
+        fLn = boardLayout.getBoardLengh();
+        board = new Square[fLn][fLn];
         curentPlayedPos = new ChessFigurePosition();
         frame = new JFrame("Chess");
         messageLabel = new JLabel("no text");
@@ -27,15 +37,23 @@ public class MainFrameChess {
         frame.getContentPane().add(messageLabel, BorderLayout.SOUTH);
 
         JPanel boardPanel = new JPanel();
-        boardPanel.setLayout(new GridLayout(f_lengh, f_lengh));
-        for (int i = 0; i < InitLayout.F_LENGH; i++) {
-            for (int j = InitLayout.F_LENGH -1; j >=0; j--) {
-                board[i][j] = new Square(i,j);
-                board[i][j].initSquare();
-                board[i][j].addMouseListener(new SquareMouseListener(board[i][j]));
-                boardPanel.add(board[i][j]);
+        boardPanel.setLayout(new GridLayout(fLn+1, fLn+1));
+        for (int i = 0; i < fLn; i++) {
+            for (int j = 0 ; j < fLn; j++) {
+                //if(j!=0){
+                    board[i][j] = new Square(i,j);
+                    board[i][j].addMouseListener(new SquareMouseListener(board[i][j]));
+                    boardPanel.add(board[i][j]);
+                //}
             }
         }
+
+        for (int i = 0; i < 8; i++) {
+            boardPanel.add( new JLabel( ""+(char )('a'+ i), SwingConstants.CENTER),8,i);
+            //boardPanel.add( new JLabel( ""+i, SwingConstants.CENTER),i,8);
+        }
+        //boardPanel.add( new JLabel( "T", SwingConstants.CENTER),8*9,8*8);
+        frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
@@ -49,10 +67,23 @@ public class MainFrameChess {
     }
 
     public void initFigureLayout(){
-        for (int i = 0; i < InitLayout.F_LENGH; i++) {
-            for (int j = 0; j < InitLayout.F_LENGH; j++) {
-                board[i][j].setText(boardLayout.getFigAtPosition(i,j).toString());
+        for (int i = 0; i < fLn; i++) {
+            for (int j = 0; j < fLn; j++) {
+                board[i][j].initSquare( boardLayout.getFigAtPosition(i,j));
+
             }
+        }
+    };
+
+    @Override
+    public void sendMessage(GameMessage msg) throws IOException {
+        clientTCP.sendGameMessage(msg);
+    }
+    public void onMessage(GameMessage msg){
+        if(msg.getType() == GameMessage.MessageType.TURN_DATA) {
+            int i = msg.getData()[0];
+            int j = msg.getData()[1];
+            board[i][j].pressed();
         }
     };
 
@@ -84,19 +115,18 @@ public class MainFrameChess {
             label.setIcon(new ImageIcon(newimg));
         }
 
-        public void setText(String t) {
-            label.setText(t);
-        }
-
         public void setChessFigure(ChessFigure f){
             fig = f;
-            setText(f.toString() );
+            label.setText(f.toString());
         }
 
-        public void initSquare(){
-            ChessFigure f = InitLayout.boardChess[pos.getI()][pos.getJ()] ;
+        /*public void initSquare(){
+            setChessFigure(new ChessFigureNo());
+        }*/
+        public void initSquare(ChessFigure f){
             setChessFigure(f);
         }
+
         public String getInfo() {
             return pos.getPosition() + " "+ fig.toString();
         }
@@ -142,5 +172,4 @@ public class MainFrameChess {
 
         }
     }
-
 }

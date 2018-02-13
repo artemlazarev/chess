@@ -3,11 +3,15 @@ package com.lazarev.edu.game.chess.logic;
 public class BoardLayout {
     private ChessFigure[][] boardChess;
 
+    public int getBoardLengh(){
+        return InitLayout.F_LENGH;
+    }
     private BoardLayout(){
         boardChess = InitLayout.boardChess.clone();
     }
     public boolean setFigAtPosition(ChessFigurePosition pos, ChessFigure fig){
         boardChess[pos.getI()][pos.getJ()] = fig;
+        fig.setFigureTouched(true);
         return true;
     }
     public ChessFigure getFigAtPosition(ChessFigurePosition pos)

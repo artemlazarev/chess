@@ -8,8 +8,9 @@ public class ChessFigurePawn extends ChessFigure {
     public boolean checkPossibleMovementByType(ChessFigurePosition from, ChessFigurePosition to, BoardLayout board){
         //the direction
         int forward = getColor()==ChessFigureColor.WHITE? 1:-1;
+        boolean sideways = (from.getI() == to.getI()-1 || from.getI() == to.getI()+1)  && from.getJ()-to.getJ()!=0;
         //check for capturing
-        if (from.getI() == to.getI()-1 || from.getI() == to.getI()+1  ) {
+        if (sideways) {
             if (from.getJ()+forward == to.getJ())
                 if (board.getFigAtPosition(to).getType() != ChessFigureType.FREE)
                     return true;
@@ -18,17 +19,19 @@ public class ChessFigurePawn extends ChessFigure {
             //TODO check for En passant
         }
         //first turn for fig = movment*2
-
-        if( Math.abs(from.getI()-to.getI()) == 1)
-            if(board.getFigAtPosition(to).getType() == ChessFigureType.FREE)
-                return true;
-            else;
         else
-            if( Math.abs(from.getI()-to.getI()) == 2 && fistTurnFoFig)
-                return  board.getFigAtPosition(from.getI()+forward, from.getJ()).getType() == ChessFigureType.FREE
-                        && board.getFigAtPosition(to).getType() == ChessFigureType.FREE;
+            if( Math.abs(from.getI()-to.getI()) == 1)
+                if(board.getFigAtPosition(to).getType() == ChessFigureType.FREE)
+                    return true;
+                else;
             else
-                return false;
+                if( Math.abs(from.getI()-to.getI()) == 2 && fistTurnFoFig) {
+                    ChessFigurePosition transit = new ChessFigurePosition(from.getI()+forward ,from.getJ());
+                    return board.getFigAtPosition(transit).getType() == ChessFigureType.FREE
+                            && board.getFigAtPosition(to).getType() == ChessFigureType.FREE;
+                }
+                else
+                    return false;
 
         return false;
     };

@@ -1,6 +1,7 @@
 package com.lazarev.edu.game.chess.client;
 
 import com.lazarev.edu.game.chess.client.gui.MainFrameChess;
+import com.lazarev.edu.game.chess.logic.BoardLayout;
 import com.lazarev.edu.game.chess.server.ChessServerTCP;
 import com.lazarev.edu.game.chess.server.GameMessage;
 
@@ -9,24 +10,42 @@ import java.net.ConnectException;
 import java.net.Socket;
 
 public class ChessClientTCP {
-    Socket clientSocket;
-    ObjectInputStream in;
-    ObjectOutputStream out;
+    private Socket clientSocket;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
+
+    private BoardLayout boardLayout;
+    MainFrameChess frame;
 
     public ChessClientTCP(){
-        initGUI();
+
         initLogic();
         initTransport();
-
+        initGUI();
     }
 
+
     private void initLogic() {
+        boardLayout = BoardLayout.getBoardLayout();
     }
 
     private void initGUI() {
-        new MainFrameChess();
+        MainFrameChess frame = new MainFrameChess(this);
+    }
+    public BoardLayout getBoardLayout(){
+        return  boardLayout;
     }
 
+    public  boolean sendGameMessage(GameMessage msg){
+        try{
+            out.writeObject(msg);
+            return true;
+        }
+        catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+    }
     private void initTransport() {
         try {
             try {
@@ -60,6 +79,8 @@ public class ChessClientTCP {
             while(true) {
                 GameMessage message = (GameMessage) in.readObject();
                 System.out.println("message: " + message);
+
+                frame.onMessage(message);
             }
         } catch (Exception e) {
             e.printStackTrace();

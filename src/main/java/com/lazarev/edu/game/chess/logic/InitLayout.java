@@ -7,14 +7,14 @@ public class InitLayout {
     public int getBoardSize(){return  F_LENGH;}
 
     public static final ChessFigure[][] boardChess = new ChessFigure[][] {
-            {new ChessFigureRook(BLACK), new ChessFigureKnight(BLACK), new ChessFigureBishop(BLACK),  new ChessFigureQueen(BLACK),  new ChessFigureKing(BLACK), new ChessFigureBishop(BLACK), new ChessFigureKnight(BLACK), new ChessFigureRook(BLACK)},
-            {new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK ), new ChessFigurePawn(BLACK ), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK)},
-            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
-            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
-            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
-            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
+            {new ChessFigureRook(WHITE), new ChessFigureKnight(WHITE), new ChessFigureBishop(WHITE),  new ChessFigureQueen(WHITE),  new ChessFigureKing(WHITE), new ChessFigureBishop(WHITE ), new ChessFigureKnight(WHITE), new ChessFigureRook(WHITE)},
             {new ChessFigurePawn(WHITE), new ChessFigurePawn(WHITE), new ChessFigurePawn(WHITE ), new ChessFigurePawn(WHITE ), new ChessFigurePawn(WHITE), new ChessFigurePawn(WHITE), new ChessFigurePawn(WHITE), new ChessFigurePawn(WHITE)},
-            {new ChessFigureRook(WHITE), new ChessFigureKnight(WHITE), new ChessFigureBishop(WHITE),  new ChessFigureQueen(WHITE),  new ChessFigureKing(WHITE), new ChessFigureBishop(WHITE ), new ChessFigureKnight(WHITE), new ChessFigureRook(WHITE)}
+            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
+            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
+            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
+            {new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo(), new ChessFigureNo()},
+            {new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK ), new ChessFigurePawn(BLACK ), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK), new ChessFigurePawn(BLACK)},
+            {new ChessFigureRook(BLACK), new ChessFigureKnight(BLACK), new ChessFigureBishop(BLACK),  new ChessFigureQueen(BLACK),  new ChessFigureKing(BLACK), new ChessFigureBishop(BLACK), new ChessFigureKnight(BLACK), new ChessFigureRook(BLACK)}
     };
     public static ChessFigureColor getSquaresColor(int i,int j) {
         int oddLine;

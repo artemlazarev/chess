@@ -9,6 +9,13 @@ public abstract class ChessFigure{
     private boolean figureTouched;
     protected boolean fistTurnFoFig = true;
 
+    public boolean isFistTurnFoFig() {
+        return fistTurnFoFig;
+    }
+    public void setFistTurnFoFig(boolean fistTurnFoFig) {
+        this.fistTurnFoFig = fistTurnFoFig;
+    }
+
     public Boolean getFigureTouched() {
         return figureTouched;
     }
@@ -82,9 +89,6 @@ public abstract class ChessFigure{
         this.type = type;
     }
 
-    //public char getText() { return text;   }
-
-    //public void setText(char text) { this.text = text;   }
     public String toString(){
         return String.valueOf(type);
     }
