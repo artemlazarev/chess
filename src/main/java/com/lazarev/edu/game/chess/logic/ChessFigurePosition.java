@@ -9,6 +9,12 @@ public class ChessFigurePosition {
         this.j = j;
     }
     public ChessFigurePosition(){};
+
+    public ChessFigurePosition(char[] data) {
+        i = data[0] - 'a';
+        j = data[1];
+    }
+
     public String getPosition() {
         return ""+(char )('a'+ j) + (int)(i+1);
     }

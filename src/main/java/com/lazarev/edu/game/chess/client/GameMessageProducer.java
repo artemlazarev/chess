@@ -2,6 +2,8 @@ package com.lazarev.edu.game.chess.client;
 
 import com.lazarev.edu.game.chess.server.GameMessage;
 
+import java.io.IOException;
+
 public interface GameMessageProducer {
-    public void onMessage(GameMessage msg);
+    public void sendMessage(GameMessage msg) throws IOException;
 }

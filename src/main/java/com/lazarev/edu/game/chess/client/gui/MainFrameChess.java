@@ -1,8 +1,9 @@
 package com.lazarev.edu.game.chess.client.gui;
 
-import com.lazarev.edu.game.chess.client.ChessClientTCP;
+import com.lazarev.edu.game.chess.client.ChessClientLogic;
 import com.lazarev.edu.game.chess.client.GameMessageConsumer;
 import com.lazarev.edu.game.chess.client.GameMessageProducer;
+import com.lazarev.edu.game.chess.client.MessageSender;
 import com.lazarev.edu.game.chess.logic.*;
 import com.lazarev.edu.game.chess.server.GameMessage;
 
@@ -18,16 +19,18 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
 
     private JFrame frame;
     private JLabel messageLabel;
-    private ChessClientTCP clientTCP;
+    private ChessClientLogic clientLogic;
     ChessFigurePosition curentPlayedPos;
-    ChessFigure curentChessFigure;
+    //ChessFigure curentChessFigure;
     private BoardLayout boardLayout;
+    MessageSender sender;
     int fLn;
     Square[][] board;
 
-    public MainFrameChess(ChessClientTCP clientTCP){
-        this.clientTCP=clientTCP;
-        this.boardLayout= clientTCP.getBoardLayout();
+    public MainFrameChess(ChessClientLogic clientLogic, MessageSender sender){
+        this.sender = sender;
+        this.clientLogic = clientLogic;
+        this.boardLayout= clientLogic.getBoardLayout();
         fLn = boardLayout.getBoardLengh();
         board = new Square[fLn][fLn];
         curentPlayedPos = new ChessFigurePosition();
@@ -54,7 +57,7 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
             //boardPanel.add( new JLabel( ""+i, SwingConstants.CENTER),i,8);
         }
         boardPanel.add( new JLabel( "", SwingConstants.CENTER),8,8);
-        
+
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +82,7 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
 
     @Override
     public void sendMessage(GameMessage msg) throws IOException {
-        clientTCP.sendGameMessage(msg);
+        sender.sendMessage(msg);
     }
     public void onMessage(GameMessage msg){
         if(msg.getType() == GameMessage.MessageType.TURN_DATA) {
@@ -134,6 +137,10 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
         }
 
         public void pressed() {
+            pos
+            if(clientLogic.onMessage(pos))
+                setChessFigure(curentChessFigure);
+            /*
             if(curentChessFigure==null)
                 curentChessFigure = fig;
             if (curentChessFigure.getFigureTouched())
@@ -152,7 +159,7 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
                 }
                 else ;
 
-            }
+            }*/
             else {
                 setBorder(BorderFactory.createLineBorder(Color.yellow,2));
                 curentPlayedPos = pos;

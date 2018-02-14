@@ -9,31 +9,25 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
 
-public class ChessClientTCP {
+public class ChessClientTCP implements GameMessageProducer, GameMessageConsumer{
     private Socket clientSocket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-
-    private BoardLayout boardLayout;
+    private MessageSender sender;
+    private ChessClientLogic clLogic;
     MainFrameChess frame;
 
     public ChessClientTCP(){
-
         initLogic();
         initTransport();
         initGUI();
     }
-
-
     private void initLogic() {
-        boardLayout = BoardLayout.getBoardLayout();
+        clLogic = new ChessClientLogic();
     }
 
     private void initGUI() {
-        MainFrameChess frame = new MainFrameChess(this);
-    }
-    public BoardLayout getBoardLayout(){
-        return  boardLayout;
+        MainFrameChess frame = new MainFrameChess(clLogic, sender);
     }
 
     public  boolean sendGameMessage(GameMessage msg){
@@ -56,7 +50,7 @@ public class ChessClientTCP {
             }
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
-            final MessageSender sender = new MessageSender(out);
+            sender = new MessageSender(out);
 
 
             Thread inputReader = new Thread(){
@@ -79,8 +73,8 @@ public class ChessClientTCP {
             while(true) {
                 GameMessage message = (GameMessage) in.readObject();
                 System.out.println("message: " + message);
+                onMessage(message);
 
-                frame.onMessage(message);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,4 +84,17 @@ public class ChessClientTCP {
     public static void main(String[] args) {
         new ChessClientTCP();
     }
+
+    @Override
+    public void sendMessage(GameMessage msg) throws IOException {
+        sender.sendMessage(msg);
+    }
+
+    @Override
+    public void onMessage(GameMessage msg) {
+        ChessClientLogic logic = new ChessClientLogic();
+        clLogic.onMessage(msg);
+        frame.onMessage(msg);
+    }
+
 }
