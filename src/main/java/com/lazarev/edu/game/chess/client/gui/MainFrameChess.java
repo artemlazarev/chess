@@ -46,13 +46,15 @@ public class MainFrameChess implements GameMessageProducer, GameMessageConsumer 
                     boardPanel.add(board[i][j]);
                 //}
             }
+            boardPanel.add( new JLabel( ""+i, SwingConstants.CENTER));
         }
 
         for (int i = 0; i < 8; i++) {
             boardPanel.add( new JLabel( ""+(char )('a'+ i), SwingConstants.CENTER),8,i);
             //boardPanel.add( new JLabel( ""+i, SwingConstants.CENTER),i,8);
         }
-        //boardPanel.add( new JLabel( "T", SwingConstants.CENTER),8*9,8*8);
+        boardPanel.add( new JLabel( "", SwingConstants.CENTER),8,8);
+        
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.getContentPane().add(boardPanel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
